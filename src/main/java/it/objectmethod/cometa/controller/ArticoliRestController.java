@@ -13,35 +13,29 @@ import org.springframework.web.bind.annotation.RestController;
 import it.objectmethod.cometa.dao.ArticoliDaoInterface;
 import it.objectmethod.cometa.model.Articolo;
 
-
 @RestController
 @RequestMapping("/api/articoli")
 public class ArticoliRestController {
-	
+
 	@Autowired
 	private ArticoliDaoInterface articoliDao;
-    
-	@GetMapping("/list")//Test ok
+
+	@GetMapping("/list")
 	public List<Articolo> mostraArticoli(@RequestParam(value = "filtro", required = false) String filtroPassato) {
 		List<Articolo> listaArticoli = null;
-		if (filtroPassato == null) {
-			listaArticoli = articoliDao.getItems("");
-		} else {
-			listaArticoli = articoliDao.getItems(filtroPassato);
-		}
+		listaArticoli = articoliDao.getItems(filtroPassato == null ? "" : filtroPassato);
 		return listaArticoli;
 	}
-    
-	// Se id articolo = 0 allora fa insert altrimenti update, per update inserire idArticolo TEST OK
+
+	// Se id articolo = 0 allora fa insert altrimenti update, per update inserire
 	@PostMapping("/save")
 	public String effettuaModifica(@RequestBody Articolo articolo) {
-		//String outputPage = "forward:/index";
 		String outputMsg = "OPERAZIONE ESEGUITA CON SUCCESSO";
 		int valid = 0;
 		int idArticolo = articolo.getId();
 		String codiceArticolo = articolo.getCodice();
 		String descrizioneArticolo = articolo.getDescrizione();
-		if (idArticolo!=0) {
+		if (idArticolo != 0) {
 			valid = articoliDao.update(idArticolo, codiceArticolo, descrizioneArticolo);
 		} else {
 			Articolo art = articoliDao.searchByCode(codiceArticolo);
@@ -51,8 +45,7 @@ public class ArticoliRestController {
 		}
 		if (valid <= 0) {
 			outputMsg = "OPERAZIONE FALLITA";
-			//outputPage = "forward:/modifica";
-			}
+		}
 		return outputMsg;
 	}
 
