@@ -29,6 +29,8 @@ import it.objectmethod.cometa.model.RigaDocumento;
 @RequestMapping("/api/documenti")
 public class DocumentiRestController {
 
+	private static final String ERRORE_INSERIMENTO = "Errore Inserimento";
+
 	@Autowired
 	private DocumentiDaoInterface documentiDao;
 
@@ -43,7 +45,7 @@ public class DocumentiRestController {
 
 	@Autowired
 	private ProfiloDocumentoInterface profiliDao;
-   
+
 	@GetMapping("/save")
 	public String inserisci(@RequestBody Documento doc) throws ParseException {
 
@@ -54,26 +56,39 @@ public class DocumentiRestController {
 		List<RigaDocumento> listRighe = doc.getRighe();
 		boolean isValid = validateInsert(doc, profile);
 		if (isValid) {
+			boolean inserito = inserisciDocumento(doc, idProfilo);
+			
+			// SPOSTARE TUTTA LA LOGICA IN INSERISCI DOCUMENTO
 			for (RigaDocumento riga : listRighe) {
 				String codiceLotto = riga.getCodiceLotto();
 				int quantita = riga.getQuantita();
-				if (profile.getMovimentoMerce().equals("+")) {
-					update = lottiDao.aggiungiQuantita(codiceLotto, quantita);
+
+				// TODO utilizziamo ENUM per MovimentoMerce e costanti per i messaggi di errore
+				// (tranne quando identificano più casi di un tipo di errore)
+				if (profile.getMovimentoMerce().equals("+")) { // TODO getMovimentoMerce() potrebbe ritornare null --->
+																// ("+").equals(profile.getMovimentoMerce()) cosi
+																// risolviamo
+					update = lottiDao.aggiungiQuantita(codiceLotto, quantita); // TODO errore, codice lotto non è
+																				// sufficiente, usare idLotto o
+																				// accoppiata codiceLotto + idArticolo
 				}
 				if (profile.getMovimentoMerce().equals("-")) {
-					update = lottiDao.sottraiQuantita(codiceLotto, quantita);
+					update = lottiDao.sottraiQuantita(codiceLotto, quantita); // TODO errore, codice lotto non è
+																				// sufficiente, usare idLotto o
+																				// accoppiata codiceLotto + idArticolo
 				}
 				if (update > 0) {
-					boolean inserito = inserisciDocumento(doc, idProfilo);
 					if (!inserito) {
-						outputMsg = "Errore Inserimento";
+						outputMsg = ERRORE_INSERIMENTO;
 						break;
 					}
 				} else {
-					outputMsg = "Errore Inserimento";
+					outputMsg = ERRORE_INSERIMENTO;
 					break;
 				}
 			}
+			
+			//FINE DELLA LOGICA DA SPOSTARE
 		} else {
 			outputMsg = "Not Valid Insert";
 		}
@@ -81,7 +96,7 @@ public class DocumentiRestController {
 		return outputMsg;
 
 	}
- 
+
 	public boolean inserisciDocumento(Documento doc, int idProfilo) {
 
 		boolean value = false;
@@ -92,17 +107,17 @@ public class DocumentiRestController {
 		int progressivo = documentiDao.getLastProgressivo(year, doc.getProfilo()) + 1;
 		int inserisciDocumento = documentiDao.inserisciDocumento(idProfilo, doc.getData(), progressivo);
 		int idDocumento = documentiDao.getIdDocumento(progressivo, idProfilo, doc.getData());
-		doc.setId(idDocumento);
-		
+//		doc.setId(idDocumento); TODO non serve
+
 		for (RigaDocumento riga : righe) {
 			articolo = articoliDao.searchByCode(riga.getCodiceArticolo());
 			int idArticolo = articolo.getId();
 			int idLotto = lottiDao.getIdByCode(riga.getCodiceLotto(), articolo.getId());
-			int inserisciRiga = righeDao.inserisciRiga(idDocumento, idArticolo,idLotto,riga.getQuantita()); 
+			int inserisciRiga = righeDao.inserisciRiga(idDocumento, idArticolo, idLotto, riga.getQuantita());
 			if (inserisciRiga > 0 && inserisciDocumento > 0) {
 				value = true;
 			} else {
-				value= false;
+				value = false;
 				break;
 			}
 		}
@@ -116,12 +131,14 @@ public class DocumentiRestController {
 		boolean isValid = false;
 		String movimentoMerce = profilo.getMovimentoMerce();
 		List<RigaDocumento> righe = doc.getRighe();
+
 		for (RigaDocumento riga : righe) {
 			lotto = lottiDao.codiceLottoInArticolo(riga.getCodiceLotto(), riga.getCodiceArticolo());
 			articolo = articoliDao.searchByCode(riga.getCodiceArticolo());
 
 			if (articolo != null) {
-				if (lotto != null) {
+				if (lotto != null) { // TODO && !movimentoMerce.equals("+") il lotto può essere null in caso di
+										// carico, in quel caso va creato il nuovo lotto
 					if (movimentoMerce.equals("-")) {
 						if (lotto.getQuantita() >= riga.getQuantita()) {
 							isValid = true;
@@ -143,8 +160,9 @@ public class DocumentiRestController {
 
 		return isValid;
 	}
-	
-    // Si può passare come paramentro il filtro e restituisce sempre gli elementi filtrati
+
+	// Si può passare come paramentro il filtro e restituisce sempre gli elementi
+	// filtrati
 	@GetMapping("/list")
 	public List<Documento> mostraDocumenti(@RequestParam(value = "profilo", required = false) Integer idProfilo,
 			@RequestParam(value = "data1", required = false) String dateFromReq,
@@ -174,7 +192,7 @@ public class DocumentiRestController {
 			idProfilo = 0;
 		}
 		documenti = documentiDao.getFilteredDocuments(idProfilo, dateFrom, dateTo);
-        
+
 		return documenti;
 	}
 }
