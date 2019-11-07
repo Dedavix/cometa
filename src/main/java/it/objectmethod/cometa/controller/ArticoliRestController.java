@@ -3,6 +3,7 @@ package it.objectmethod.cometa.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import it.objectmethod.cometa.model.Articolo;
 
 @RestController
 @RequestMapping("/api/articoli")
+@CrossOrigin
 public class ArticoliRestController {
 
 	@Autowired
