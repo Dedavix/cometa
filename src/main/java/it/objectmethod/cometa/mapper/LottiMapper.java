@@ -1,0 +1,22 @@
+package it.objectmethod.cometa.mapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.springframework.jdbc.core.RowMapper;
+
+import it.objectmethod.cometa.model.Lotto;
+
+
+public class LottiMapper implements RowMapper<Lotto>{
+
+	@Override
+	public Lotto mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Lotto lotto = new Lotto();
+		lotto.setId(rs.getInt("id"));
+		lotto.setCodice(rs.getString("codice_lotto"));
+		lotto.setId_articolo(rs.getInt("id_articolo"));
+		lotto.setQuantita(rs.getInt("quantita"));
+		return lotto;
+	}
+
+}
