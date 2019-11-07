@@ -18,8 +18,8 @@ public class LottiRestController {
 	@Autowired
 	private LottiDaoInterface lottiDao;
 	
-	@GetMapping("/{id}/list")
-	public List<Lotto> mostraLotti(@PathVariable(value = "id", required = true) int articolo) {
+	@GetMapping("/articolo/{idArticolo}/list")
+	public List<Lotto> mostraLotti(@PathVariable(value = "idArticolo", required = true) int articolo) {
 		List<Lotto> listaLotti = lottiDao.getLotti(articolo);
 		return listaLotti;
 	}
