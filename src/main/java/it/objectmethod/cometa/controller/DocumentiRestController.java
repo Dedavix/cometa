@@ -58,6 +58,22 @@ public class DocumentiRestController {
 		if (isValid) {
 			boolean inserito = inserisciDocumento(doc, idProfilo);
 			
+			/*
+			 * Come migliorare la logica dell'inserimento:
+			 * 
+			 * Abbiamo 2 tipi di controlli, uno in fase di inserimento documento e uno in fase di inserimento righe
+			 * prima di guardare le righe inizierei a validare il documento (se necessario) e inserire il documento
+			 * 
+			 * Poi iniziamo a scorrere le righe, per ogni riga facciamo validazione della riga e inserimento della stessa
+			 * Se incontro una riga che non supera la validazione abbiamo 2 possibilità:
+			 * 
+			 * 1) Se non abbiamo già aggiornato le quantità dei lotti di ogni riga, posso fare break dell'inserimento righe
+			 *  e fare una delete sia delle righe già inserite che del documento stesso
+			 * 2) Salto la riga in errore e mi segno un messaggio da ritornare come "warning", alla fine ritorno lista con tutti i messaggi warning.
+			 * 3) Valido tutto pre-inserimento, ma per il validatore mi creo una classe apposita e non metto il metodo nel controller, strutturando la validazione con più metodi
+			 * 	  procedo poi con l'inserimento/update solo dopo l'ok del validatore.
+			 */
+			
 			// SPOSTARE TUTTA LA LOGICA IN INSERISCI DOCUMENTO
 			for (RigaDocumento riga : listRighe) {
 				String codiceLotto = riga.getCodiceLotto();
