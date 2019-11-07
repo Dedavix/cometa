@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.objectmethod.cometa.dao.RigheDocumentoDao;
+import it.objectmethod.cometa.dao.RigheDocumentoDaoInterface;
 import it.objectmethod.cometa.model.RigaDocumento;
 
 @RestController
@@ -16,7 +16,7 @@ import it.objectmethod.cometa.model.RigaDocumento;
 public class RigheDocumentoRestController {
 	
 	@Autowired
-	private RigheDocumentoDao righeDao;
+	private RigheDocumentoDaoInterface righeDao;
 	
 	@GetMapping("/{id}/list")
 	public List<RigaDocumento> mostraRighe(@PathVariable(value = "id") int idDocumento) {

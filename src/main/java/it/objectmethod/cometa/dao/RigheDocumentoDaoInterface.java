@@ -4,7 +4,7 @@ import java.util.List;
 
 import it.objectmethod.cometa.model.RigaDocumento;
 
-public interface RigheDocumentoDao {
+public interface RigheDocumentoDaoInterface {
 	
 	public List<RigaDocumento> getRighe(int idDocumento);
 	

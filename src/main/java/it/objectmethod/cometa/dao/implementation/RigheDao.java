@@ -9,11 +9,11 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.stereotype.Service;
 
-import it.objectmethod.cometa.dao.RigheDocumentoDao;
+import it.objectmethod.cometa.dao.RigheDocumentoDaoInterface;
 import it.objectmethod.cometa.model.RigaDocumento;
 
 @Service
-public class RigheDao extends NamedParameterJdbcDaoSupport implements RigheDocumentoDao {
+public class RigheDao extends NamedParameterJdbcDaoSupport implements RigheDocumentoDaoInterface {
     	
 	public RigheDao(DataSource datasource) {
 		super();

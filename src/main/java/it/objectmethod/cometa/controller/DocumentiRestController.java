@@ -18,7 +18,7 @@ import it.objectmethod.cometa.dao.ArticoliDaoInterface;
 import it.objectmethod.cometa.dao.DocumentiDaoInterface;
 import it.objectmethod.cometa.dao.LottiDaoInterface;
 import it.objectmethod.cometa.dao.ProfiloDocumentoInterface;
-import it.objectmethod.cometa.dao.RigheDocumentoDao;
+import it.objectmethod.cometa.dao.RigheDocumentoDaoInterface;
 import it.objectmethod.cometa.model.Articolo;
 import it.objectmethod.cometa.model.Documento;
 import it.objectmethod.cometa.model.Lotto;
@@ -39,7 +39,7 @@ public class DocumentiRestController {
 	private LottiDaoInterface lottiDao;
 
 	@Autowired
-	private RigheDocumentoDao righeDao;
+	private RigheDocumentoDaoInterface righeDao;
 
 	@Autowired
 	private ProfiloDocumentoInterface profiliDao;
