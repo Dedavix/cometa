@@ -25,6 +25,9 @@ a {
 	color: #dc05f1;
 }
 </style>
+
+ <script src="..js/articoli.js"></script>
+ 
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
