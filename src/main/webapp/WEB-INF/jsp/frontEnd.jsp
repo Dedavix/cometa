@@ -29,6 +29,10 @@ a {
 <title>Insert title here</title>
 </head>
 <body>
+    <div align = "center"> <h1>Premi per visualizzare:</h1>
+    <input type = "button" onClick="showArticoli()" value = "Articoli">
+    <input type = "button" onClick="showDocumenti()" value = "Documenti">
+    </div>
 	<p id="mostraArticoli" class=bg></p>
 </body>
 </html>
