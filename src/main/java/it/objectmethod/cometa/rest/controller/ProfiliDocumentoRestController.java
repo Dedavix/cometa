@@ -1,4 +1,4 @@
-package it.objectmethod.cometa.controller;
+package it.objectmethod.cometa.rest.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package it.objectmethod.cometa.controller;
+package it.objectmethod.cometa.rest.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
