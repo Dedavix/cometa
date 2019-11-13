@@ -21,12 +21,10 @@
 	<div id="main-content">
 		<div id="articoli-content" style="display: none;">
 			<div id="articoli-filter">
-				<form name="form" onSubmit="showArticoli()">
-					<b>Filtra Articoli:</b> <input type="text" name="filtro"><br>
-					<input type="submit"> <br> <br>
-				</form>
+				<b>Filtra Articoli:</b><input type= "text" id="articoliFilter"><br>
+					<input type="button" onClick="showArticoli()"><br><br>
 			</div>
-			<div id="insert-content">
+			<div id="insertArticle-content">
 				<p align="left">
 					<input type=button onClick="aggiungiArticolo()"
 						value="Aggiungi Articolo">
@@ -35,21 +33,31 @@
 			<div id="articoli-table-container">
 				<h1 align="left">Tabella Articoli:</h1>
 				<table id="articoli-table">			
-				<!-- qui ci mettiamo le righe generate via JS -->
+				<!-- righe generate via JS -->
 				</table>
 			</div>
 		</div>
 		<div id="documenti-content" style="display: none;">
 			<div id="documenti-filter">
-				<input ... etc etc>
-				<button ... blabla>
-			
+				<p align ="left">Filtro: </p>
+				<select id="profili-documento" required="required" style='margin:5px'>
+				</select>
+				Da: <input type="date" id="data1">
+				A: <input type = "date" id="data2">
+				<br>
+				<input type = "button" onClick="showDocumenti()" value = "VAI">
+				<br><br>
+			</div>
+			<div id="insertDocument-content">
+				<p align="left">
+					<input type=button onClick="aggiungiDocumento()"
+						value="Aggiungi Documento">
+				</p>
 			</div>
 			<div id="documenti-table-container">
-				<table id="documenti-table">
-				
-				<!-- qui ci mettiamo le righe generate via JS -->
-				
+			<h1 align="left">Tabella Documenti:</h1>
+				<table id="documenti-table">		
+				<!--righe generate via JS -->		
 				</table>
 			</div>
 		</div>
