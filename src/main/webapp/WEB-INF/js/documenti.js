@@ -14,7 +14,7 @@ function showDocumenti(){
             documenti = documenti.results;
 			var htmlGen = "<tr><th>Codice</th><th>Progressivo</th><th>Data</th></tr>";
 			for(var d of documenti){
-				htmlGen+="<tr><td><a onClick="mostraDocumento(d.id)">" + d.descrizione + "</a></td><td><a onClick="mostraDocumento(d.id)">"+ d.progressivo + "</a></td><td><a onClick="mostraDocumento(d.id)">"+ d.data +"</a></td></tr>";
+				htmlGen+="<tr><td><a onClick=\"showRigheDocumento(d.id)\">" + d.descrizione + "</a></td><td><a onClick=\"showRigheDocumento(d.id)\">"+ d.progressivo + "</a></td><td><a onClick=\"showRigheDocumento(d.id)\">"+ d.data +"</a></td></tr>";
 			}
 			document.getElementById("documenti-content").style.display = "block";
 			document.getElementById("documenti-table").innerHTML = htmlGen;		
@@ -27,7 +27,7 @@ function showDocumenti(){
     console.log("Ho mandato la chiamata");
 }
 
- function showDocumentFilter(){
+function showDocumentFilter(){
 	 console.log("Ricava ProfiliDocumento");
 	    var xmlhttp = new XMLHttpRequest();    
 		xmlhttp.onreadystatechange = function() {
@@ -48,6 +48,33 @@ function showDocumenti(){
 				true);
 	    xmlhttp.send();
 	    console.log("Ho mandato la chiamata");
+	 
+ }
+ 
+ function showRigheDocumento(idDocumento){
+	 
+	 document.getElementById("documenti-content").style.display = "none";
+		console.log("MOSTRA RIGHE DOCUMENTO");
+	    var xmlhttp = new XMLHttpRequest();    
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+	            console.log("Ho ricevuto la risposta");
+	            var righe = JSON.parse(this.responseText);
+	            righe= righe.results;
+				var htmlGen = "<tr><th>Codice Articolo</th><th>Descrizione Articolo</th><th>Codice Lotto</th><th>Quantita</th></tr>";
+				for(var r of righe){
+					htmlGen+="<tr><td>"+r.codiceArticolo+"</td><td>"+r.descrizioneArticolo+"</td><td>"+r.codiceLotto+"</td><td>"+r.quantita+"</td></tr>";
+				}
+				document.getElementById("righe-documento-content").style.display = "block";
+				document.getElementById("righe-table").innerHTML = htmlGen;
+			}
+	    };
+	    
+		xmlhttp.open("GET", "http://localhost:8080/api/documenti/{"+idDocumento+"}/list",
+				true);
+	    xmlhttp.send();
+	    console.log("Ho mandato la chiamata");
+	    
 	 
  }
 

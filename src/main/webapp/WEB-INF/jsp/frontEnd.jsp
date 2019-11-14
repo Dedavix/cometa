@@ -50,11 +50,13 @@
 				<input id="idModArticolo" type="hidden"> <input
 					type="button" onClick="modificaArticolo()" value="OK">
 			</div>
-		</div>
-		<div id="lotti-content" style="display: none;">
-		    <h1>Elenco Lotti</h1><br><br>
-			<table id="lotti-table" style="width: 100%">
-			</table>
+			<div id="lotti-content" style="display: none;">
+				<h1>Elenco Lotti</h1>
+				<br>
+				<br>
+				<table id="lotti-table" style="width: 100%">
+				</table>
+			</div>
 		</div>
 		<div id="documenti-content" style="display: none;">
 			<div id="documenti-filter">
@@ -76,6 +78,10 @@
 				<table id="documenti-table">
 					<!--righe generate via JS -->
 				</table>
+			</div>
+			<div id="righe-documento-content">
+				<h1>Righe Documento:</h1>
+				<table id=righe-table></table>
 			</div>
 		</div>
 </body>
