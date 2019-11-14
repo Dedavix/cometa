@@ -1,3 +1,5 @@
+var righeDocumento = [];
+
 function showDocumenti(){
 	document.getElementById("articoli-content").style.display = "none";
 	console.log("MOSTRA Documenti");
@@ -73,11 +75,51 @@ function showDocumentFilter(){
 		xmlhttp.open("GET", "http://localhost:8080/api/documenti/{"+idDocumento+"}/list",
 				true);
 	    xmlhttp.send();
-	    console.log("Ho mandato la chiamata");
-	    
-	 
+	    console.log("Ho mandato la chiamata");	    	 
+ }
+ 
+ function mostraAggiungiDocumento(){
+	 document.getElementById("documenti-content").style.display = "none";
+	 showDocumentFilter();
+	 document.getElementById("aggiungi-documento").style.display ="block";	 
  }
 
+ function aggiungiRigaDocumento(){
+	 var codiceArticolo = document.getElementById("codiceArticoloRiga").value;
+	 var codiceLotto= document.getElementById("codiceLottoRiga").value;
+	 var quantita= document.getElementById("quantitaRiga").value;
+	 var rigaDocumento = {codiceArticolo:codiceArticolo,codiceLotto:codiceLotto, quantita:quantita};
+	 righeDocumento.push(rigaDocumento);
+	 var htmlGen = "Codice Articolo: <input type=\"text\" id=\"codiceArticoloRiga\">Codice Lotto: <input type=\"text\" id=\"codiceLottoRiga\">Quantita: <input type=\"text\" id=\"quantitaRiga\">";
+	 document.getElementById("riga-documento").innerHTML = htmlGen;
+     alert("RIGA DOCUMENTO AGGIUNTA")
+ }
+ 
+function inviaDocumento(){
+	var idProfilo= document.getElementById("profili-documento").value;
+	var dataDoc=document.getElementById("dataDocIns").value
+	var documento = {idProfilo:idProfilo,data:dataDoc, righe:righeDocumento};
+	var documentoJSON = JSON.stringify(documento);
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+            console.log("Ho ricevuto la risposta");
+            var esito = JSON.parse(this.responseText);
+            esito = esito.results;
+            if (esito.localCompare("OK")==0){
+            	document.getElementById("aggiungi-documento").style.display ="none";
+            	showDocumenti();
+            	alert("DOCUMENTO INSERITO CORRETTAMENTE"); 	
+            }else{
+            	alert("INSERIMENTO NON VALIDO");
+            } 
+		}
+    };
+    
+    xmlhttp.open("POST", "http://localhost:8080/api/documenti/save",
+			true);
+    xmlhttp.send(documentoJSON);
+    console.log("Ho mandato la chiamata");
+}
 
 
 

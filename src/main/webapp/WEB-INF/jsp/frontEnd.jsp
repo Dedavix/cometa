@@ -25,7 +25,7 @@
 				<b>Filtra Articoli:</b><input type="text" id="articoliFilter"><br>
 				<input type="button" onClick="showArticoli()"><br> <br>
 			</div>
-			<div id="insertArticle-content">
+			<div id="insert-article-call-content">
 				<p align="left">
 					<input type=button onClick="mostraAggiungiArticolo()"
 						value="Aggiungi Articolo">
@@ -52,8 +52,7 @@
 			</div>
 			<div id="lotti-content" style="display: none;">
 				<h1>Elenco Lotti</h1>
-				<br>
-				<br>
+				<br> <br>
 				<table id="lotti-table" style="width: 100%">
 				</table>
 			</div>
@@ -67,9 +66,9 @@
 					id="data2"> <br> <input type="button"
 					onClick="showDocumenti()" value="VAI"> <br> <br>
 			</div>
-			<div id="insertDocument-content">
+			<div id="insertDocument-call-content">
 				<p align="left">
-					<input type=button onClick="aggiungiDocumento()"
+					<input type=button onClick="mostraAggiungiDocumento()"
 						value="Aggiungi Documento">
 				</p>
 			</div>
@@ -79,10 +78,26 @@
 					<!--righe generate via JS -->
 				</table>
 			</div>
+			<div id="aggiungi-documento">
+				<select id="profili-documento" required="required"
+					style='margin: 5px'>
+				</select> Data Documento :<input type="date" id="dataDocIns"> <br>
+				<br>
+				<div id="riga-documento">
+					Codice Articolo: <input type="text" id="codiceArticoloRiga">
+					Codice Lotto: <input type="text" id="codiceLottoRiga">
+					Quantita: <input type="text" id="quantitaRiga">
+				</div>
+				<br>
+				<br> <input type="button" onclick="AggiungiRigaDocumento()"
+					value="Aggiungi Riga"> <input type="button"
+					onclick="inviaDocumento()" value="Invia">
+			</div>
 			<div id="righe-documento-content">
 				<h1>Righe Documento:</h1>
 				<table id=righe-table></table>
 			</div>
 		</div>
+	</div>
 </body>
 </html>

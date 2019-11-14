@@ -49,7 +49,7 @@ public class DocumentiRestController {
 	@GetMapping("/save")
 	public String inserisci(@RequestBody Documento doc) throws ParseException {
 
-		String outputMsg = "Inserimento Eseguito Correttamente";
+		String outputMsg = "OK";
 		int update = 1;
 		int idProfilo = doc.getIdProfilo();
 		ProfiloDocumento profile = profiliDao.getProfile(idProfilo);
@@ -106,7 +106,7 @@ public class DocumentiRestController {
 			
 			//FINE DELLA LOGICA DA SPOSTARE
 		} else {
-			outputMsg = "Not Valid Insert";
+			outputMsg = "ERRORE_INSERIMENTO";
 		}
 
 		return outputMsg;
