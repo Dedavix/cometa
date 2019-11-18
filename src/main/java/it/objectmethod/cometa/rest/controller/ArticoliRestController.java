@@ -50,5 +50,12 @@ public class ArticoliRestController {
 		}
 		return outputMsg;
 	}
+	
+	@GetMapping("/getById")
+	public Articolo mostraArticolo(@RequestParam(value = "id", required = true) String idArticolo) {
+		Articolo articolo = null;
+		articolo = articoliDao.searchById(idArticolo);
+		return articolo;
+	}
 
 }

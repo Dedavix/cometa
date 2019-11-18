@@ -2,10 +2,12 @@ var righeDocumento = [];
 
 function showDocumenti(){
 	document.getElementById("articoli-content").style.display = "none";
+	document.getElementById("lotti-content").style.display = "none";
+	document.getElementById("righe-documento-content").style.display = "none";
 	console.log("MOSTRA Documenti");
 	showDocumentFilter();
     var xmlhttp = new XMLHttpRequest();
-    var profilo = document.getElementById("profiloDocumento").value;
+    var profilo = document.getElementById("profili-documento").value;
     var dataFrom = document.getElementById("data1").value;
     var dataTo = document.getElementById("data2").value;
     
@@ -13,19 +15,19 @@ function showDocumenti(){
 		if (this.readyState == 4 && this.status == 200) {
             console.log("Ho ricevuto la risposta");
             var documenti = JSON.parse(this.responseText);
-            documenti = documenti.results;
 			var htmlGen = "<tr><th>Codice</th><th>Progressivo</th><th>Data</th></tr>";
 			for(var d of documenti){
-				htmlGen+="<tr><td><a onClick=\"showRigheDocumento(d.id)\">" + d.descrizione + "</a></td><td><a onClick=\"showRigheDocumento(d.id)\">"+ d.progressivo + "</a></td><td><a onClick=\"showRigheDocumento(d.id)\">"+ d.data +"</a></td></tr>";
+				htmlGen+="<tr><td><p onClick=\"showRigheDocumento("+d.id+")\">" + d.profilo + "</p></td><td><p onClick=\"showRigheDocumento("+d.id+")\">"+ d.progressivo + "</p></td><td><p onClick=\"showRigheDocumento("+d.id+")\">"+ d.data +"</p></td></tr>";
 			}
 			document.getElementById("documenti-content").style.display = "block";
+			document.getElementById("main-documenti-page").style.display = "block";
 			document.getElementById("documenti-table").innerHTML = htmlGen;		
 		}
     };
     
-	xmlhttp.open("GET", "http://localhost:8080/api/documenti/list",
+	xmlhttp.open("GET", "http://localhost:8080/api/documenti/list/?profilo="+ profilo + "&data1="+ dataFrom +"&data2="+dataTo,
 			true);
-    xmlhttp.send(profilo&dataFrom&dataTo);
+    xmlhttp.send();
     console.log("Ho mandato la chiamata");
 }
 
@@ -36,7 +38,6 @@ function showDocumentFilter(){
 			if (this.readyState == 4 && this.status == 200) {
 	            console.log("Ho ricevuto la risposta");
 	            var profili = JSON.parse(this.responseText);
-	            profili = profili.results;
 	            htmlGen="<option value=\"0\">Nessun Profilo</option>";
 
 	            for(var p of profili){
@@ -44,6 +45,7 @@ function showDocumentFilter(){
 				}
 	            				
 				document.getElementById("profili-documento").innerHTML = htmlGen;
+				document.getElementById("profili-documento2").innerHTML = htmlGen;
 			}
 	    };    
 		xmlhttp.open("GET", "http://localhost:8080/api/profiliDocumento/list",
@@ -62,7 +64,6 @@ function showDocumentFilter(){
 			if (this.readyState == 4 && this.status == 200) {
 	            console.log("Ho ricevuto la risposta");
 	            var righe = JSON.parse(this.responseText);
-	            righe= righe.results;
 				var htmlGen = "<tr><th>Codice Articolo</th><th>Descrizione Articolo</th><th>Codice Lotto</th><th>Quantita</th></tr>";
 				for(var r of righe){
 					htmlGen+="<tr><td>"+r.codiceArticolo+"</td><td>"+r.descrizioneArticolo+"</td><td>"+r.codiceLotto+"</td><td>"+r.quantita+"</td></tr>";
@@ -79,7 +80,7 @@ function showDocumentFilter(){
  }
  
  function mostraAggiungiDocumento(){
-	 document.getElementById("documenti-content").style.display = "none";
+	 document.getElementById("main-documenti-page").style.display = "none";
 	 showDocumentFilter();
 	 document.getElementById("aggiungi-documento").style.display ="block";	 
  }
@@ -98,14 +99,14 @@ function showDocumentFilter(){
 function inviaDocumento(){
 	var idProfilo= document.getElementById("profili-documento").value;
 	var dataDoc=document.getElementById("dataDocIns").value
+	var xmlhttp = new XMLHttpRequest();
 	var documento = {idProfilo:idProfilo,data:dataDoc, righe:righeDocumento};
 	var documentoJSON = JSON.stringify(documento);
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
             console.log("Ho ricevuto la risposta");
-            var esito = JSON.parse(this.responseText);
-            esito = esito.results;
-            if (esito.localCompare("OK")==0){
+            var esito = this.responseText;
+            if (esito.localeCompare("OK")==0){
             	document.getElementById("aggiungi-documento").style.display ="none";
             	showDocumenti();
             	alert("DOCUMENTO INSERITO CORRETTAMENTE"); 	
@@ -117,6 +118,7 @@ function inviaDocumento(){
     
     xmlhttp.open("POST", "http://localhost:8080/api/documenti/save",
 			true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(documentoJSON);
     console.log("Ho mandato la chiamata");
 }
