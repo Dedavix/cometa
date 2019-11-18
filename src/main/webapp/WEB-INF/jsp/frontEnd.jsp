@@ -2,15 +2,17 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
+
 <head>
-<style>
-</style>
-<script src="../js/articoli.js"></script>
-<script src="../js/documenti.js"></script>
-<link rel="stylesheet" type="text/css" href="../css/style.css">
-<meta charset="ISO-8859-1">
-<title>PaginaJSP</title>
+	<style>
+	</style>
+	<script src="../js/articoli.js"></script>
+	<script src="../js/documenti.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<meta charset="ISO-8859-1">
+	<title>PaginaJSP</title>
 </head>
+
 <body>
 
 	<div align="center">
@@ -30,8 +32,7 @@
 				</div>
 				<div id="insert-article-call-content">
 					<p align="left">
-						<input type="button" onClick="mostraAggiungiArticolo()"
-							value="Aggiungi Articolo">
+						<input type="button" onClick="mostraAggiungiArticolo()" value="Aggiungi Articolo">
 					</p>
 				</div>
 				<div id="articoli-table-container">
@@ -51,8 +52,7 @@
 				<h1>Modifica Articolo</h1>
 				Codice: <input id="codiceArticoloMod" type="text"><br>
 				Descrizione: <input id="descrizioneArticoloMod" type="text"><br>
-				<input id="idModArticolo" type="hidden"> <input
-					type="button" onClick="modificaArticolo()" value="OK">
+				<input id="idModArticolo" type="hidden"> <input type="button" onClick="modificaArticolo()" value="OK">
 			</div>
 		</div>
 		<div id="lotti-content" style="display: none;">
@@ -65,16 +65,13 @@
 			<div id="main-documenti-page">
 				<div id="documenti-filter">
 					<p align="left">Filtro:</p>
-					<select id="profili-documento" required="required"
-						style='margin: 5px'>
-					</select> Da: <input type="date" id="data1"> A: <input type="date"
-						id="data2"> <br> <input type="button"
-						onClick="showDocumenti()" value="VAI"> <br> <br>
+					<select id="profili-documento" required="required" style='margin: 5px'>
+					</select> Da: <input type="date" id="data1"> A: <input type="date" id="data2"> <br> <input
+						type="button" onClick="showDocumenti()" value="VAI"> <br> <br>
 				</div>
 				<div id="insertDocument-call-content">
 					<p align="left">
-						<input type="button" onClick="mostraAggiungiDocumento()"
-							value="Aggiungi Documento">
+						<input type="button" onClick="mostraAggiungiDocumento()" value="Aggiungi Documento">
 					</p>
 				</div>
 				<div id="documenti-table-container">
@@ -86,8 +83,7 @@
 			</div>
 			<div id="aggiungi-documento" style="display: none;">
 				<h1>Aggiungi Documento</h1>
-				<select id="profili-documento2" required="required"
-					style='margin: 5px'>
+				<select id="profili-documento2" required="required" style='margin: 5px'>
 				</select> Data Documento :<input type="date" id="dataDocIns"> <br>
 				<br>
 				<div id="riga-documento">
@@ -95,9 +91,10 @@
 					Codice Lotto: <input type="text" id="codiceLottoRiga">
 					Quantita: <input type="text" id="quantitaRiga">
 				</div>
-				<br> <br> <input type="button"
-					onclick="aggiungiRigaDocumento()" value="Aggiungi Riga"> <input
+				<br> <br> <input type="button" onclick="aggiungiRigaDocumento()" value="Aggiungi Riga"> <input
 					type="button" onclick="inviaDocumento()" value="Invia">
+				<table id="righe-documento-aggiunte">
+				</table>
 			</div>
 		</div>
 		<div id="righe-documento-content" style="display: none;">
@@ -106,4 +103,5 @@
 		</div>
 	</div>
 </body>
+
 </html>

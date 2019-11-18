@@ -156,7 +156,7 @@ public class DocumentiRestController {
 			if (articolo != null) {
 				if (lotto != null) { // TODO && !movimentoMerce.equals("+") il lotto può essere null in caso di
 										// carico, in quel caso va creato il nuovo lotto
-					if (movimentoMerce.equals("-")) {
+					if (movimentoMerce.equals("-")) { //"-".equals(movimentoMerce);
 						if (lotto.getQuantita() >= riga.getQuantita()) {
 							isValid = true;
 						}
