@@ -8,9 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.stereotype.Service;
-
 import it.objectmethod.cometa.dao.ProfiloDocumentoInterface;
-import it.objectmethod.cometa.model.Documento;
 import it.objectmethod.cometa.model.ProfiloDocumento;
 
 @Service

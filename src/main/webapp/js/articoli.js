@@ -11,13 +11,14 @@ function showArticoli() {
 		if (this.readyState == 4 && this.status == 200) {
             console.log("Ho ricevuto la risposta");
             var articoli = JSON.parse(this.responseText);
-			var htmlGen = "<tr><th>Codice</th><th>Descrizione</th><th>Quantita Totale</th><th>Azione<th></tr>";
+			var htmlGen = "<tr><th>Codice</th><th>Descrizione</th><th>Quantita Totale</th><th>Azione</th><th>Dettaglio</th></tr>";
 			for(var a of articoli){
 				htmlGen+="<tr><td>"
-					+"<p onclick=\"mostraLotto("+a.id+")\">"+ a.codice
-					+"</p></td><td><p onClick=\"mostraLotto("+a.id+")\">"+ a.descrizione +"</p></td>"
-					+"<td><p onClick=\"mostraLotto("+a.id+")\">"+a.quantitaTot +"</p></td>" 
-					+"<td align=\"center\"><input type=\"button\" value=\"Modifica\" onClick=\"mostraModificaArticolo("+a.id+")\"></td></tr>";
+					+"<p>"+ a.codice
+					+"</p></td><td><p>"+ a.descrizione +"</p></td>"
+					+"<td><p>"+a.quantitaTot +"</p></td>" 
+					+"<td align=\"center\"><input type=\"button\" value=\"Modifica\" onClick=\"mostraModificaArticolo("+a.id+")\"></td>"
+					+"<td><input type =\"button\" value=\"dettagli\" onclick=\"mostraLotto("+a.id+")\"></td></tr>";
 			}
 			document.getElementById("articoli-content").style.display = "block";
 			document.getElementById("articoli-main-page").style.display = "block";
@@ -37,33 +38,58 @@ function mostraAggiungiArticolo(){
 }
 
 function inserisciArticolo(){
-	var codiceArticolo=document.getElementById("codiceArticoloIns").value;
-	var descrizioneArticolo=document.getElementById("descrizioneArticoloIns").value;
-	var xmlhttp = new XMLHttpRequest();
-	var articolo = {id:0,codice:codiceArticolo,descrizione:descrizioneArticolo,quantitaTot:0};
-	var articoloJSON = JSON.stringify(articolo);
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-            console.log("Ho ricevuto la risposta");
-            var esito = this.responseText;
-            if (esito.localeCompare("OPERAZIONE ESEGUITA CON SUCCESSO")==0){
-            	document.getElementById("aggiungi-articolo-container").style.display="none";
-            	showArticoli();
-            	alert("ARTICOLO INSERITO CORRETTAMENTE"); 	
-            }else{
-            	alert("INSERIMENTO NON VALIDO");
-            } 
-		}
-    };
-    
-    xmlhttp.open("POST", "http://localhost:8080/api/articoli/save",
-			true);
-    xmlhttp.setRequestHeader("Content-Type", "application/json");
-    xmlhttp.send(articoloJSON);
-    console.log("Ho mandato la chiamata");	
+	
+	$(document).ready(function(){
+		
+	/*
+	 * var codiceArticolo=document.getElementById("codiceArticoloIns").value;
+	 * var
+	 * descrizioneArticolo=document.getElementById("descrizioneArticoloIns").value;
+	 * var xmlhttp = new XMLHttpRequest(); var articolo =
+	 * {id:0,codice:codiceArticolo,descrizione:descrizioneArticolo,quantitaTot:0};
+	 * var articoloJSON = JSON.stringify(articolo); xmlhttp.onreadystatechange =
+	 * function() { if (this.readyState == 4 && this.status == 200) {
+	 * console.log("Ho ricevuto la risposta"); var esito = this.responseText; if
+	 * (esito.localeCompare("OPERAZIONE ESEGUITA CON SUCCESSO")==0){
+	 * document.getElementById("aggiungi-articolo-container").style.display="none";
+	 * showArticoli(); alert("ARTICOLO INSERITO CORRETTAMENTE"); }else{
+	 * alert("INSERIMENTO NON VALIDO"); } }
+	 */			
+		var codiceArticolo= $("#codiceArticoloIns").val();
+		var descrizioneArticolo = $("#descrizioneArticoloIns").val();
+		var articolo= {id:0,codice:codiceArticolo,descrizione:descrizioneArticolo,quantitaTot:0};
+		var articoloJSON = JSON.stringify(articolo);
+		
+		 $.ajax({
+             url: "http://localhost:8080/api/articoli/save"
+             , method: "POST"
+             , contentType :  "application/json"
+             , data: articoloJSON
+             , success: function (response) {
+                 var esito = response;
+                 if (esito.localeCompare("OPERAZIONE ESEGUITA CON SUCCESSO")==0){
+                 	// document.getElementById("aggiungi-articolo-container").style.display="none";
+                 	$("#aggiungi-articolo-container").hide();
+                 	showArticoli();
+                 	alert("ARTICOLO INSERITO CORRETTAMENTE"); 	
+                 }else{
+                 	alert("INSERIMENTO NON VALIDO");
+                 } 
+             }                
+             , error: function(response) {
+                 alert("ERRORE");
+             }
+         });
+    	});
+   /*
+	 * xmlhttp.open("POST", "http://localhost:8080/api/articoli/save", true);
+	 * xmlhttp.setRequestHeader("Content-Type", "application/json");
+	 * xmlhttp.send(articoloJSON);
+	 */	
 }
 
 function mostraModificaArticolo(idArticolo){
+	
 	document.getElementById("articoli-main-page").style.display = "none";
 	console.log("GET ARTICOLO BY ID");
     var xmlhttp = new XMLHttpRequest();

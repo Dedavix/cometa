@@ -8,6 +8,8 @@
 	</style>
 	<script src="../js/articoli.js"></script>
 	<script src="../js/documenti.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="../js/jquery-functions.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/style.css">
 	<meta charset="ISO-8859-1">
 	<title>PaginaJSP</title>
@@ -17,8 +19,8 @@
 
 	<div align="center">
 		<h1>Premi per visualizzare:</h1>
-		<input type="button" onClick="showArticoli()" value="Articoli">
-		<input type="button" onClick="showDocumenti()" value="Documenti">
+		<input id = "mostra-articoli-button" type="button"  value="Articoli">
+		<input id ="mostra-documenti-button" type="button"  value="Documenti">
 		<br> <br> <br>
 	</div>
 
@@ -46,7 +48,7 @@
 				<h1>Inserisci Articolo</h1>
 				Codice: <input id="codiceArticoloIns" type="text"><br>
 				Descrizione: <input id="descrizioneArticoloIns" type="text"><br>
-				<input type="button" onClick="inserisciArticolo()" value="OK">
+				<input type="button" onclick="inserisciArticolo()" value="OK">
 			</div>
 			<div id="modifica-articolo-container" style="display: none;">
 				<h1>Modifica Articolo</h1>

@@ -63,20 +63,20 @@ public class LottiDao implements LottiDaoInterface {
 	}
 
 	@Override
-	public int sottraiQuantita(String codiceLotto, int quantita) {
+	public int sottraiQuantita(int idArticolo, String codiceLotto, int quantita) {
 		int result = 0;
 		String sql;
-		sql = "UPDATE cometa_easy.lotti SET quantita= quantita - ? WHERE codice_lotto = ? ";
-		result = this.jdbcTemplateObject.update(sql, new Object[] { quantita, codiceLotto });
+		sql = "UPDATE cometa_easy.lotti SET quantita= quantita - ? WHERE codice_lotto = ? and id_articolo= ?";
+		result = this.jdbcTemplateObject.update(sql, new Object[] { quantita, codiceLotto, idArticolo });
 		return result;
 	}
 
 	@Override
-	public int aggiungiQuantita(String codiceLotto, int quantita) {
+	public int aggiungiQuantita(int idArticolo, String codiceLotto, int quantita) {
 		int result = 0;
 		String sql;
-		sql = "UPDATE cometa_easy.lotti SET quantita= quantita + ? WHERE codice_lotto = ? ";
-		result = this.jdbcTemplateObject.update(sql, new Object[] { quantita, codiceLotto });
+		sql = "UPDATE cometa_easy.lotti SET quantita= quantita + ? WHERE codice_lotto = ? and id_articolo = ?";
+		result = this.jdbcTemplateObject.update(sql, new Object[] { quantita, codiceLotto, idArticolo });
 		return result;
 	}
 
@@ -85,6 +85,14 @@ public class LottiDao implements LottiDaoInterface {
 		String sql = "Select lotti.id from cometa_easy.lotti where codice_lotto = ? and id_articolo= ?";
 		int id = this.jdbcTemplateObject.queryForObject(sql, new Object[] { codice, idArticolo }, Integer.class);
 		return id;
+	}
+
+	@Override
+	public int insert(int idArticolo, String codiceLotto, int quantità) {
+		int rs = 0;
+		String sql = "INSERT INTO lotti(codice_lotto,id_articolo,quantita) VALUES (?,?,?)";
+		rs = this.jdbcTemplateObject.update(sql, new Object[] { codiceLotto, idArticolo, quantità });
+		return rs;
 	}
 
 }
