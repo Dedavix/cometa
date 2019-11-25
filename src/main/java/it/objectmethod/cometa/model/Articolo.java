@@ -1,11 +1,55 @@
 package it.objectmethod.cometa.model;
 
-public class Articolo {
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "articoli")
+public class Articolo {
+    
+	@GeneratedValue
+	@Id
 	private int id;
+	
+	@Column(name="codice")
 	private String codice;
+	
+	@Column(name="descrizione")
 	private String descrizione;
-	private int quantitaTot;
+	
+	@JoinColumn(name ="id_articolo")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Lotto> lotti;
+	
+	@JoinColumn(name ="id_articolo")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<RigaDocumento> righeDocumento;
+	
+
+	public List<RigaDocumento> getRigheDocumento() {
+		return righeDocumento;
+	}
+
+	public void setRigheDocumento(List<RigaDocumento> righeDocumento) {
+		this.righeDocumento = righeDocumento;
+	}
+
+	public List<Lotto> getLotti() {
+		return lotti;
+	}
+
+	public void setLotti(List<Lotto> lotti) {
+		this.lotti = lotti;
+	}
 
 	public int getId() {
 		return id;
@@ -29,14 +73,6 @@ public class Articolo {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
-	}
-
-	public int getQuantitaTot() {
-		return quantitaTot;
-	}
-
-	public void setQuantitaTot(int quantita_tot) {
-		this.quantitaTot = quantita_tot;
 	}
 
 }

@@ -1,10 +1,46 @@
 package it.objectmethod.cometa.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name="lotti")
 public class Lotto {
+	
+	@GeneratedValue
+	@Id
 	private int id;
+	
+	@Column(name= "codice_lotto")
 	private String codice;
+	
+	@Column(name="id_articolo")
 	private int idArticolo;
+	
+	@Column(name="quantita")
 	private int quantita;
+    
+	@JsonIgnore
+	@ManyToOne
+	private Articolo articolo;
+	
+	@JoinColumn(name ="id_lotto")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<RigaDocumento> righeDocumento;
+	
+	
 
 	public int getId() {
 		return id;
@@ -26,7 +62,7 @@ public class Lotto {
 		return idArticolo;
 	}
 
-	public void setId_articolo(int idArticolo) {
+	public void setIdArticolo(int idArticolo) {
 		this.idArticolo = idArticolo;
 	}
 
@@ -38,4 +74,22 @@ public class Lotto {
 		this.quantita = quantita;
 	}
 
+	public Articolo getArticolo() {
+		return articolo;
+	}
+
+	public void setArticolo(Articolo articolo) {
+		this.articolo = articolo;
+	}
+
+	public List<RigaDocumento> getRigheDocumento() {
+		return righeDocumento;
+	}
+
+	public void setRigheDocumento(List<RigaDocumento> righeDocumento) {
+		this.righeDocumento = righeDocumento;
+	}
+
+	
+	
 }
