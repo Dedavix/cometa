@@ -8,17 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.objectmethod.cometa.dao.ProfiloDocumentoInterface;
 import it.objectmethod.cometa.model.ProfiloDocumento;
+import it.objectmethod.cometa.repositories.ProfiliDocRepository;
 
 @RestController
 @RequestMapping("/api/profiliDocumento")
 public class ProfiliDocumentoRestController {
 
 	@Autowired
-	private ProfiloDocumentoInterface profiliDao;
+	private ProfiliDocRepository profiliRepo;
 
 	@GetMapping("/list")
 	public List<ProfiloDocumento> mostraInserimento() {
-		List<ProfiloDocumento> profiles = profiliDao.getProfiles();
+		List<ProfiloDocumento> profiles = profiliRepo.findAll();
 		return profiles;
 	}
 
