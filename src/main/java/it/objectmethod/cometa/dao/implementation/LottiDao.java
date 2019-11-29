@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import it.objectmethod.cometa.dao.LottiDaoInterface;
-import it.objectmethod.cometa.mapper.LottiMapper;
 import it.objectmethod.cometa.model.Lotto;
 
 @Service
@@ -31,7 +30,7 @@ public class LottiDao implements LottiDaoInterface {
 		String sql;
 		sql = "SELECT COALESCE(lotti.id, 0)as id, COALESCE(lotti.codice_lotto, 'NA')as codice_lotto ,COALESCE(lotti.id_articolo,0) as id_articolo, COALESCE(lotti.quantita,0) as quantita\r\n"
 				+ "FROM cometa_easy.lotti\r\n" + "where lotti.id_articolo=?";
-		lista = this.jdbcTemplateObject.query(sql, new Object[] { item }, new LottiMapper());
+		//lista = this.jdbcTemplateObject.query(sql, new Object[] { item }, new LottiMapper());
 		return lista;
 	}
 	
@@ -43,7 +42,7 @@ public class LottiDao implements LottiDaoInterface {
 		List<Lotto> lotti = null; 
 		sql = "Select lotti.id as id,codice_lotto,id_articolo,quantita from cometa_easy.lotti join cometa_easy.articoli on lotti.id_articolo=articoli.id\n" + 
 				"where codice_lotto = ? and codice= ? ";
-		lotti = this.jdbcTemplateObject.query(sql, new Object[] { codiceLotto, codiceArticolo },new LottiMapper());
+		//lotti = this.jdbcTemplateObject.query(sql, new Object[] { codiceLotto, codiceArticolo },new LottiMapper());
 		if(!lotti.isEmpty()) {
 			lotto= lotti.get(0);
 		}
@@ -55,7 +54,7 @@ public class LottiDao implements LottiDaoInterface {
 		Lotto lotto = null;
 		List<Lotto> lotti = null;	
 		String sql= "SELECT * from cometa_easy.lotti where codice_lotto = ? and quantita >= ?";
-		lotti = this.jdbcTemplateObject.query(sql, new Object[] { codiceLotto, quantita }, new LottiMapper());
+		// = this.jdbcTemplateObject.query(sql, new Object[] { codiceLotto, quantita }, new LottiMapper());
 		if(!lotti.isEmpty()) {
 			lotto= lotti.get(0);
 		}

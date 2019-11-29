@@ -11,17 +11,19 @@ import it.objectmethod.cometa.model.Documento;
 import it.objectmethod.cometa.model.Lotto;
 import it.objectmethod.cometa.model.ProfiloDocumento;
 import it.objectmethod.cometa.model.RigaDocumento;
+import it.objectmethod.cometa.repositories.ArticoliRepository;
+import it.objectmethod.cometa.repositories.LottiRepository;
 
 @Component
 public class DocumentiValidator {
 	
 	private final static String OK = "Ok";
-
+	
 	@Autowired
-	private ArticoliDaoInterface articoliDao;
-
+	private LottiRepository lottiRepo;
+	
 	@Autowired
-	private LottiDaoInterface lottiDao;
+	private ArticoliRepository articoliRepo;
 
 
 	// Invece di string usare un enum ValidationResult con i vari tipi di errore

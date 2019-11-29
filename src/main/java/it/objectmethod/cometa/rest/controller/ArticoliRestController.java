@@ -1,6 +1,7 @@
 package it.objectmethod.cometa.rest.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.objectmethod.cometa.dao.ArticoliDaoInterface;
 import it.objectmethod.cometa.model.Articolo;
+import it.objectmethod.cometa.model.ArticoloView;
+import it.objectmethod.cometa.repositories.ArticoliRepository;
+import it.objectmethod.cometa.repositories.ArticoliViewRepository;
 
 @RestController
 @RequestMapping("/api/articoli")
@@ -20,12 +23,15 @@ import it.objectmethod.cometa.model.Articolo;
 public class ArticoliRestController {
 
 	@Autowired
-	private ArticoliDaoInterface articoliDao;
+	private ArticoliViewRepository articoliViewRepo;
+	
+	@Autowired
+	private ArticoliRepository articoliRepo;
 
 	@GetMapping("/list")
-	public List<Articolo> mostraArticoli(@RequestParam(value = "filtro", required = false) String filtroPassato) {
-		List<Articolo> listaArticoli = null;
-		listaArticoli = articoliDao.getItems(filtroPassato == null ? "" : filtroPassato);
+	public List<ArticoloView> mostraArticoli(@RequestParam(value = "filtro", required = false) String filtroPassato) {
+		List<ArticoloView> listaArticoli = null;
+		listaArticoli = articoliViewRepo.getArticoliFiltrati(filtroPassato == null ? "" : filtroPassato);
 		return listaArticoli;
 	}
 
@@ -33,28 +39,31 @@ public class ArticoliRestController {
 	@PostMapping("/save")
 	public String effettuaModifica(@RequestBody Articolo articolo) {
 		String outputMsg = "OPERAZIONE ESEGUITA CON SUCCESSO";
-		int valid = 0;
+		Articolo articoloSalvato = null;
 		int idArticolo = articolo.getId();
 		String codiceArticolo = articolo.getCodice();
 		String descrizioneArticolo = articolo.getDescrizione();
 		if (idArticolo != 0) {
-			valid = articoliDao.update(idArticolo, codiceArticolo, descrizioneArticolo);
+			articoloSalvato = articoliRepo.save(articolo);
 		} else {
-			Articolo art = articoliDao.searchByCode(codiceArticolo);
+			Articolo art = articoliRepo.findByCodice(codiceArticolo);
 			if (art == null) {
-				valid = articoliDao.insert(codiceArticolo, descrizioneArticolo);
+				Articolo articoloInserito = new Articolo();
+				articoloInserito.setCodice(codiceArticolo);
+				articoloInserito.setDescrizione(descrizioneArticolo);
+				articoloSalvato= articoliRepo.save(articoloInserito);
 			}
 		}
-		if (valid <= 0) {
+		if (articoloSalvato==null) {
 			outputMsg = "OPERAZIONE FALLITA";
 		}
 		return outputMsg;
 	}
 	
 	@GetMapping("/getById")
-	public Articolo mostraArticolo(@RequestParam(value = "id", required = true) String idArticolo) {
-		Articolo articolo = null;
-		articolo = articoliDao.searchById(idArticolo);
+	public Optional<Articolo> mostraArticolo(@RequestParam(value = "id", required = true) Integer idArticolo) {
+		Optional<Articolo> articolo = null;
+		articolo = articoliRepo.findById(idArticolo);
 		return articolo;
 	}
 

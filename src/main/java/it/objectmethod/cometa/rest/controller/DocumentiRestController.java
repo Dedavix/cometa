@@ -2,6 +2,7 @@ package it.objectmethod.cometa.rest.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,11 +21,19 @@ import it.objectmethod.cometa.dao.DocumentiDaoInterface;
 import it.objectmethod.cometa.dao.LottiDaoInterface;
 import it.objectmethod.cometa.dao.ProfiloDocumentoInterface;
 import it.objectmethod.cometa.dao.RigheDocumentoDaoInterface;
+import it.objectmethod.cometa.dto.DocumentoDTO;
+import it.objectmethod.cometa.dto.RigaDocumentoDTO;
+import it.objectmethod.cometa.mapper.EntityToDTOMapper;
 import it.objectmethod.cometa.model.Articolo;
 import it.objectmethod.cometa.model.Documento;
 import it.objectmethod.cometa.model.Lotto;
 import it.objectmethod.cometa.model.ProfiloDocumento;
 import it.objectmethod.cometa.model.RigaDocumento;
+import it.objectmethod.cometa.repositories.ArticoliRepository;
+import it.objectmethod.cometa.repositories.DocumentiRepository;
+import it.objectmethod.cometa.repositories.LottiRepository;
+import it.objectmethod.cometa.repositories.ProfiliDocRepository;
+import it.objectmethod.cometa.repositories.RigheDocRepository;
 import it.objectmethod.cometa.validators.DocumentiValidator;
 
 @RestController
@@ -35,22 +44,25 @@ public class DocumentiRestController {
 	private static final String OK ="Ok";
 
 	@Autowired
-	private DocumentiDaoInterface documentiDao;
+	private DocumentiRepository documentiRepo;
 
 	@Autowired
-	private ArticoliDaoInterface articoliDao;
+	private ArticoliRepository articoliRepo;
 
 	@Autowired
-	private LottiDaoInterface lottiDao;
+	private LottiRepository lottiRepo;
 
 	@Autowired
-	private RigheDocumentoDaoInterface righeDao;
+	private RigheDocRepository righeRepo;
 
 	@Autowired
-	private ProfiloDocumentoInterface profiliDao;
+	private ProfiliDocRepository profiliRepo;
 	
 	@Autowired
 	private DocumentiValidator validatoreDocumento;
+	
+	@Autowired
+	private EntityToDTOMapper entityToDtoMapper;
 
 	/*
 	 * Come migliorare la logica dell'inserimento:
@@ -73,11 +85,11 @@ public class DocumentiRestController {
 	 * l'ok del validatore.
 	 */
 	@PostMapping("/save")
-	public String inserisci(@RequestBody Documento doc) throws ParseException {
+	public String inserisci(@RequestBody DocumentoDTO doc) throws ParseException {
 
 		String outputMsg = OK;
 		int idProfilo = doc.getIdProfilo();
-		ProfiloDocumento profile = profiliDao.getProfile(idProfilo);
+		ProfiloDocumento profile = profiliRepo.getOne(idProfilo);
 	    outputMsg = validatoreDocumento.validate(doc, profile);
 		if (outputMsg==OK) {
 			boolean inserito = inserisciDocumento(doc, profile);
@@ -99,10 +111,9 @@ public class DocumentiRestController {
 		Articolo articolo = null;
 		List<RigaDocumento> righe = doc.getRighe();
 		int idProfilo = profile.getId();
-		int progressivo = documentiDao.getLastProgressivo(year, doc.getProfilo()) + 1;
-		int inserisciDocumento = documentiDao.inserisciDocumento(idProfilo, doc.getData(), progressivo);
-		int idDocumento = documentiDao.getIdDocumento(progressivo, idProfilo, doc.getData());
-
+		int progressivo = documentiRepo.getLastProgressivo(year, doc.getProfilo().getId()) + 1;
+		Documento documentoInserito = documentiRepo.save(doc);
+		int idDocumento = documentiRepo.getDocumentId(progressivo, idProfilo, doc.getData());
 		for (RigaDocumento riga : righe) {
 			articolo = articoliDao.searchByCode(riga.getCodiceArticolo());
 			int idArticolo = articolo.getId();
@@ -179,12 +190,12 @@ public class DocumentiRestController {
 	// Si può passare come paramentro il filtro e restituisce sempre gli elementi
 	// filtrati
 	@GetMapping("/list")
-	public List<Documento> mostraDocumenti(@RequestParam(value = "profilo", required = false) Integer idProfilo,
+	public List<DocumentoDTO> mostraDocumenti(@RequestParam(value = "profilo", required = false) Integer idProfilo,
 			@RequestParam(value = "data1", required = false) String dateFromReq,
 			@RequestParam(value = "data2", required = false) String dateToReq) throws ParseException {
 
-		List<Documento> documenti = null;
-
+		List<Documento> documenti = new ArrayList<Documento>();
+        List<DocumentoDTO> documentiDTO = new ArrayList<DocumentoDTO>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		Calendar calFrom = Calendar.getInstance();
@@ -206,8 +217,14 @@ public class DocumentiRestController {
 		if (idProfilo == null) {
 			idProfilo = 0;
 		}
-		documenti = documentiDao.getFilteredDocuments(idProfilo, dateFrom, dateTo);
+		
+		documenti = documentiRepo.findFilteredDocument(idProfilo, dateFrom, dateTo);
+		for(Documento doc:documenti) {
+			DocumentoDTO docDto = entityToDtoMapper.documentToDTO(doc);
+			documentiDTO.add(docDto);
+		}
+		
 
-		return documenti;
+		return documentiDTO;
 	}
 }
