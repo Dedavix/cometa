@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import it.objectmethod.cometa.model.ProfiloDocumento;
 
 @Repository
-public interface ProfiliDocRepository extends JpaRepository<ProfiloDocumento, Integer> {
+public interface ProfiloDocumentoRepository extends JpaRepository<ProfiloDocumento, Integer> {
 
 }

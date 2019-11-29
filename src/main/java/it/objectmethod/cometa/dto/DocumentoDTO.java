@@ -3,23 +3,20 @@ package it.objectmethod.cometa.dto;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class DocumentoDTO {
-	
-private Integer id;
-	
+
+	private Integer id;
+
 	private Integer idProfilo;
-	
+
 	private String codiceProfilo;
-	
-	private Integer Progressivo;
-	
+
+	private Integer progressivo;
+
 	private Date data;
-	
+
 	private List<RigaDocumentoDTO> righeDocumento;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -45,11 +42,11 @@ private Integer id;
 	}
 
 	public Integer getProgressivo() {
-		return Progressivo;
+		return progressivo;
 	}
 
 	public void setProgressivo(Integer progressivo) {
-		Progressivo = progressivo;
+		this.progressivo = progressivo;
 	}
 
 	public Date getData() {
@@ -67,7 +64,5 @@ private Integer id;
 	public void setRigheDocumento(List<RigaDocumentoDTO> righeDocumento) {
 		this.righeDocumento = righeDocumento;
 	}
-
-	
 
 }

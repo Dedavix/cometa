@@ -10,38 +10,25 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="righe_documento")
+@Table(name = "righe_documento")
 public class RigaDocumento {
-	
+
 	@GeneratedValue
 	@Id
 	private int id;
-	
-	@Column(name="id_articolo")
-	private int idArticolo;
-	
-	@Column(name="id_documento")
-	private int idDocumento;
-	
-	@Column(name="id_lotto")
-	private int idLotto;
-	
-	@Column(name="quantita")
+
+	@Column(name = "quantita")
 	private int quantita;
-	
+
 	@JsonIgnore
 	@ManyToOne
 	private Documento documento;
-	
-	@JsonIgnore
+
 	@ManyToOne
 	private Articolo articolo;
-	
-	@JsonIgnore
+
 	@ManyToOne
 	private Lotto lotto;
-	
-	
 
 	public int getId() {
 		return id;
@@ -49,30 +36,6 @@ public class RigaDocumento {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getIdArticolo() {
-		return idArticolo;
-	}
-
-	public void setIdArticolo(int idArticolo) {
-		this.idArticolo = idArticolo;
-	}
-
-	public int getIdDocumento() {
-		return idDocumento;
-	}
-
-	public void setIdDocumento(int idDocumento) {
-		this.idDocumento = idDocumento;
-	}
-
-	public int getIdLotto() {
-		return idLotto;
-	}
-
-	public void setIdLotto(int idLotto) {
-		this.idLotto = idLotto;
 	}
 
 	public int getQuantita() {
@@ -106,7 +69,5 @@ public class RigaDocumento {
 	public void setLotto(Lotto lotto) {
 		this.lotto = lotto;
 	}
-	
-	
 
 }

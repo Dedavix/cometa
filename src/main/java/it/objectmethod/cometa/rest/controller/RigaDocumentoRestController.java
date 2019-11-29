@@ -9,30 +9,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.objectmethod.cometa.dao.RigheDocumentoDaoInterface;
 import it.objectmethod.cometa.dto.RigaDocumentoDTO;
-import it.objectmethod.cometa.mapper.EntityToDTOMapper;
+import it.objectmethod.cometa.dto.mapper.RigaDocumentoMapper;
 import it.objectmethod.cometa.model.RigaDocumento;
-import it.objectmethod.cometa.repositories.RigheDocRepository;
+import it.objectmethod.cometa.repositories.RigaDocumentoRepository;
 
 @RestController
 @RequestMapping("/api/righeDocumento")
-public class RigheDocumentoRestController {
-	
+public class RigaDocumentoRestController {
+
 	@Autowired
-	private RigheDocRepository righeRepo;
-	
+	private RigaDocumentoRepository righeRepo;
+
 	@Autowired
-	private EntityToDTOMapper entityMapper;
-	
+	private RigaDocumentoMapper rdMapper;
+
 	@GetMapping("/{id}/list")
 	public List<RigaDocumentoDTO> mostraRighe(@PathVariable(value = "id") int idDocumento) {
 		List<RigaDocumentoDTO> righeDto = new ArrayList<RigaDocumentoDTO>();
 		List<RigaDocumento> righe = righeRepo.findAll();
-		for(RigaDocumento riga :righe) {
-			righeDto.add(entityMapper.rigaToDTO(riga));
+		for (RigaDocumento riga : righe) {
+			righeDto.add(rdMapper.toDto(riga));
 		}
-		
+
 		return righeDto;
 	}
 }

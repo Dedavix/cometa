@@ -4,28 +4,25 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import it.objectmethod.cometa.dao.ArticoliDaoInterface;
-import it.objectmethod.cometa.dao.LottiDaoInterface;
+
 import it.objectmethod.cometa.dto.DocumentoDTO;
 import it.objectmethod.cometa.dto.RigaDocumentoDTO;
 import it.objectmethod.cometa.model.Articolo;
-import it.objectmethod.cometa.model.Documento;
 import it.objectmethod.cometa.model.Lotto;
 import it.objectmethod.cometa.model.ProfiloDocumento;
-import it.objectmethod.cometa.model.RigaDocumento;
-import it.objectmethod.cometa.repositories.ArticoliRepository;
-import it.objectmethod.cometa.repositories.LottiRepository;
+import it.objectmethod.cometa.repositories.ArticoloRepository;
+import it.objectmethod.cometa.repositories.LottoRepository;
 
 @Component
-public class DocumentiValidator {
+public class DocumentoValidator {
 	
-	private final static String OK = "Ok";
-	
-	@Autowired
-	private LottiRepository lottiRepo;
+	public final static String OK = "Ok";
 	
 	@Autowired
-	private ArticoliRepository articoliRepo;
+	private LottoRepository lottiRepo;
+	
+	@Autowired
+	private ArticoloRepository articoliRepo;
 
 
 	// Invece di string usare un enum ValidationResult con i vari tipi di errore

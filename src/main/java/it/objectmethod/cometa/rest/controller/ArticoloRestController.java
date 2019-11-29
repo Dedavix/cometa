@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.objectmethod.cometa.model.Articolo;
 import it.objectmethod.cometa.model.ArticoloView;
-import it.objectmethod.cometa.repositories.ArticoliRepository;
-import it.objectmethod.cometa.repositories.ArticoliViewRepository;
+import it.objectmethod.cometa.repositories.ArticoloRepository;
+import it.objectmethod.cometa.repositories.ArticoloViewRepository;
 
 @RestController
 @RequestMapping("/api/articoli")
 @CrossOrigin
-public class ArticoliRestController {
+public class ArticoloRestController {
 
 	@Autowired
-	private ArticoliViewRepository articoliViewRepo;
+	private ArticoloViewRepository articoliViewRepo;
 	
 	@Autowired
-	private ArticoliRepository articoliRepo;
+	private ArticoloRepository articoliRepo;
 
 	@GetMapping("/list")
 	public List<ArticoloView> mostraArticoli(@RequestParam(value = "filtro", required = false) String filtroPassato) {

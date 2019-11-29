@@ -14,8 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name="documenti")
 public class Documento {
@@ -23,9 +21,6 @@ public class Documento {
 	@GeneratedValue
 	@Id
 	private int id;
-	
-	@Column(name="id_profilo_documento")
-	private int idProfilo;
 	
 	@Column(name="data")
 	private Date data;
@@ -37,7 +32,6 @@ public class Documento {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<RigaDocumento> righe;
 	
-	@JsonIgnore
 	@ManyToOne
 	private ProfiloDocumento profilo;
 	
@@ -72,11 +66,4 @@ public class Documento {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getIdProfilo() {
-		return idProfilo;
-	}
-	public void setIdProfilo(int idProfilo) {
-		this.idProfilo = idProfilo;
-	}
-
 }

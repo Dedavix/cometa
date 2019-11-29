@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import it.objectmethod.cometa.model.Lotto;
 
 @Repository
-public interface LottiRepository extends JpaRepository<Lotto, Integer>{
+public interface LottoRepository extends JpaRepository<Lotto, Integer>{
 	
 	@Query("select l from Lotto l where l.idArticolo=?1")
 	public List<Lotto> getLotti(int idArticolo);
@@ -21,5 +21,7 @@ public interface LottiRepository extends JpaRepository<Lotto, Integer>{
 	public Lotto verificaLottoInArticolo(String codiceLotto,String codiceArticolo);
 	
 	public Lotto findQuantitaById(int idLotto);
+
+	public Lotto findByCodiceAndIdArticolo(String codiceLotto, Integer idArticolo);
 
 }

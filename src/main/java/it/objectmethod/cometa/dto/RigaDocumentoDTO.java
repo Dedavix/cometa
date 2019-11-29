@@ -1,8 +1,5 @@
 package it.objectmethod.cometa.dto;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class RigaDocumentoDTO {
 	
 	private Integer id;
@@ -11,7 +8,7 @@ public class RigaDocumentoDTO {
 	
 	private Integer idArticolo;
 	
-	private Integer idLottto;
+	private Integer idLotto;
 	
 	private String codiceArticolo;
 	
@@ -39,12 +36,12 @@ public class RigaDocumentoDTO {
 		this.idArticolo = idArticolo;
 	}
 
-	public Integer getIdLottto() {
-		return idLottto;
+	public Integer getIdLotto() {
+		return idLotto;
 	}
 
-	public void setIdLottto(Integer idLottto) {
-		this.idLottto = idLottto;
+	public void setIdLotto(Integer idLotto) {
+		this.idLotto = idLotto;
 	}
 
 	public void setIdDocumento(Integer idDocumento) {

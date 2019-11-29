@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import it.objectmethod.cometa.model.RigaDocumento;
 
 @Repository
-public interface RigheDocRepository extends JpaRepository<RigaDocumento, Integer>{
+public interface RigaDocumentoRepository extends JpaRepository<RigaDocumento, Integer>{
 	
 	public List<RigaDocumento> findByIdDocumento(int idDocumento);
 
