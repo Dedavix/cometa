@@ -16,7 +16,7 @@ public interface DocumentoRepository extends JpaRepository<Documento, Integer> {
 	@Query("select max(d.progressivo) Documento d where year(d.data)=?1 and d.idProfilo = ?2 group by d.idProfilo, year(d.data)")
 	public Integer getLastProgressivo(String anno, int idProfilo);
 	
-	@Query("select d.id from Documento d where d.progressivo = ?1 and d.idProfilo = ?2 and d.data = ?3")
+	@Query(value ="select d.id from Documento d where d.progressivo = ?1 and d.idProfilo = ?2 and d.data = ?3", nativeQuery = true)
 	public Integer getDocumentId(int progressivo, int idProfilo, Date data);
 	
 	@Query("select d from documenti d where (:idProfilo = 0 or d.id = :idProfilo) AND d.data BETWEEN :dataFrom and :dataTo ")

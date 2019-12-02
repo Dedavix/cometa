@@ -27,21 +27,21 @@ public class Articolo {
 	private String descrizione;
 	
 	@JoinColumn(name ="id_articolo")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Lotto> lotti;
 	
-	@JoinColumn(name ="id_articolo")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<RigaDocumento> righeDocumento;
+//	@JoinColumn(name ="id_articolo")
+//	@OneToMany(cascade = CascadeType.ALL)
+//	private List<RigaDocumento> righeDocumento;
 	
 
-	public List<RigaDocumento> getRigheDocumento() {
-		return righeDocumento;
-	}
-
-	public void setRigheDocumento(List<RigaDocumento> righeDocumento) {
-		this.righeDocumento = righeDocumento;
-	}
+//	public List<RigaDocumento> getRigheDocumento() {
+//		return righeDocumento;
+//	}
+//
+//	public void setRigheDocumento(List<RigaDocumento> righeDocumento) {
+//		this.righeDocumento = righeDocumento;
+//	}
 
 	public List<Lotto> getLotti() {
 		return lotti;

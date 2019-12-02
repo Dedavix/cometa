@@ -38,11 +38,11 @@ public class ArticoloView {
 	}
 
 	@JoinColumn(name ="id_articolo")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany( cascade = CascadeType.ALL)
 	private List<Lotto> lotti;
 	
 	@JoinColumn(name ="id_articolo")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany( cascade = CascadeType.ALL)
 	private List<RigaDocumento> righeDocumento;
 	
 

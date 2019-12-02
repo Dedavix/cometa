@@ -37,7 +37,7 @@ public class Lotto {
 	private Articolo articolo;
 	
 	@JoinColumn(name ="id_lotto")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<RigaDocumento> righeDocumento;
 	
 	
