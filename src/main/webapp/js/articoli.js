@@ -16,7 +16,7 @@ function showArticoli() {
 				htmlGen+="<tr><td>"
 					+"<p>"+ a.codice
 					+"</p></td><td><p>"+ a.descrizione +"</p></td>"
-					+"<td><p>"+a.quantitaTot +"</p></td>" 
+					+"<td><p>"+a.quantita +"</p></td>" 
 					+"<td align=\"center\"><input type=\"button\" value=\"Modifica\" onClick=\"mostraModificaArticolo("+a.id+")\"></td>"
 					+"<td><input type =\"button\" value=\"dettagli\" onclick=\"mostraLotto("+a.id+")\"></td></tr>";
 			}

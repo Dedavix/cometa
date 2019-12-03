@@ -1,15 +1,11 @@
 package it.objectmethod.cometa.model;
 
-import java.util.List;
+import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,40 +23,7 @@ public class ArticoloView {
 	private String descrizione;
 	
 	@Column(name="quantita")
-	private  int quantita;
-	
-	public int getQuantita() {
-		return quantita;
-	}
-
-	public void setQuantita(int quantita) {
-		this.quantita = quantita;
-	}
-
-	@JoinColumn(name ="id_articolo")
-	@OneToMany( cascade = CascadeType.ALL)
-	private List<Lotto> lotti;
-	
-	@JoinColumn(name ="id_articolo")
-	@OneToMany( cascade = CascadeType.ALL)
-	private List<RigaDocumento> righeDocumento;
-	
-
-	public List<RigaDocumento> getRigheDocumento() {
-		return righeDocumento;
-	}
-
-	public void setRigheDocumento(List<RigaDocumento> righeDocumento) {
-		this.righeDocumento = righeDocumento;
-	}
-
-	public List<Lotto> getLotti() {
-		return lotti;
-	}
-
-	public void setLotti(List<Lotto> lotti) {
-		this.lotti = lotti;
-	}
+	private  BigDecimal quantita;
 
 	public int getId() {
 		return id;
@@ -84,6 +47,14 @@ public class ArticoloView {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	public BigDecimal getQuantita() {
+		return quantita;
+	}
+
+	public void setQuantita(BigDecimal quantita) {
+		this.quantita = quantita;
 	}
 
 }

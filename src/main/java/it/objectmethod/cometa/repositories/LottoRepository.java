@@ -11,17 +11,18 @@ import it.objectmethod.cometa.model.Lotto;
 @Repository
 public interface LottoRepository extends JpaRepository<Lotto, Integer>{
 	
-	@Query("select l from Lotto l where l.idArticolo=?1")
+	@Query("select l from Lotto l where l.articolo.id=?1")
 	public List<Lotto> getLotti(int idArticolo);
 	
 	@Query("select l from Lotto l where l.codice = ?1 and l.quantita >= ?2")
 	public List<Lotto> verificaQuantita(String codiceLotto, int quantita);
 	
-	@Query("Select l from Lotto l join Articolo a on l.idArticolo=a.id where l.codice= ?1 and a.codice= ?2")
+	@Query("Select l from Lotto l where l.codice= ?1 and l.articolo.codice= ?2")
 	public Lotto verificaLottoInArticolo(String codiceLotto,String codiceArticolo);
 	
 	public Lotto findQuantitaById(int idLotto);
-
+    
+	@Query("select l from Lotto l where l.articolo.id = ?2 and l.codice= ?1")
 	public Lotto findByCodiceAndIdArticolo(String codiceLotto, Integer idArticolo);
 
 }

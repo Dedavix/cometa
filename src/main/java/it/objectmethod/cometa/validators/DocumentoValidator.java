@@ -60,7 +60,7 @@ public class DocumentoValidator {
 					// inserisci lotto
 					String codiceLotto = riga.getCodiceLotto();
 					Lotto lottoDaInserire = new Lotto();
-					lottoDaInserire.setIdArticolo(idArticolo);
+					lottoDaInserire.getArticolo().setId(idArticolo);
 					lottoDaInserire.setCodice(codiceLotto);
 					lottoDaInserire.setQuantita(0);
                     Lotto lottoInserito = lottiRepo.save(lottoDaInserire);

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,9 +24,6 @@ public class Lotto {
 	
 	@Column(name= "codice_lotto")
 	private String codice;
-	
-	@Column(name="id_articolo")
-	private int idArticolo;
 	
 	@Column(name="quantita")
 	private int quantita;
@@ -56,14 +52,6 @@ public class Lotto {
 
 	public void setCodice(String codice) {
 		this.codice = codice;
-	}
-
-	public int getIdArticolo() {
-		return idArticolo;
-	}
-
-	public void setIdArticolo(int idArticolo) {
-		this.idArticolo = idArticolo;
 	}
 
 	public int getQuantita() {
