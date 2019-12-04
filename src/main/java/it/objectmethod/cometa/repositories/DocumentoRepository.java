@@ -19,6 +19,6 @@ public interface DocumentoRepository extends JpaRepository<Documento, Integer> {
 	@Query(value ="select d.id from Documento d where d.progressivo = ?1 and d.profilo.id = ?2 and d.data = ?3")
 	public Integer getDocumentId(int progressivo, int idProfilo, Date data);
 	
-	@Query("select d from Documento d join fetch d.profilo pd where (:idProfilo = 0 or pd.id = :idProfilo) AND d.data BETWEEN :dataFrom and :dataTo ")
+	@Query("select d from Documento d where (:idProfilo = 0 or d.profilo.id = :idProfilo) AND d.data BETWEEN :dataFrom and :dataTo ")
 	public List<Documento> findFilteredDocument(@Param("idProfilo")int idProfilo, @Param("dataFrom") Date data1, @Param("dataTo") Date data2);
 }
