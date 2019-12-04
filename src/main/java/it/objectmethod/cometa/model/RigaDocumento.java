@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,12 +23,15 @@ public class RigaDocumento {
 
 	@JsonIgnore
 	@ManyToOne
+	@JoinColumn(name = "id_documento")
 	private Documento documento;
 
 	@ManyToOne
+	@JoinColumn(name = "id_articolo")
 	private Articolo articolo;
 
 	@ManyToOne
+	@JoinColumn(name = "id_lotto")
 	private Lotto lotto;
 
 	public int getId() {
