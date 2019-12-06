@@ -41,7 +41,9 @@ public class DocumentoValidator {
 
 		for (RigaDocumentoDTO riga : righe) {
 			int indiceRiga = 1;
-			lotto = lottiRepo.verificaLottoInArticolo(riga.getCodiceLotto(), riga.getCodiceArticolo());
+			if (riga.getCodiceLotto()!="") {
+				lotto = lottiRepo.verificaLottoInArticolo(riga.getCodiceLotto(), riga.getCodiceArticolo());
+			}
 			articolo = articoliRepo.findByCodice(riga.getCodiceArticolo());
 
 			if (articolo != null) {
@@ -60,7 +62,7 @@ public class DocumentoValidator {
 					// inserisci lotto
 					String codiceLotto = riga.getCodiceLotto();
 					Lotto lottoDaInserire = new Lotto();
-					lottoDaInserire.getArticolo().setId(idArticolo);
+					lottoDaInserire.setArticolo(articolo);
 					lottoDaInserire.setCodice(codiceLotto);
 					lottoDaInserire.setQuantita(0);
                     Lotto lottoInserito = lottiRepo.save(lottoDaInserire);

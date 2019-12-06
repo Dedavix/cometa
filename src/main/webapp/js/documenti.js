@@ -21,7 +21,7 @@ function showDocumenti() {
                  var documenti = response;
                  var htmlGen = "<tr><th>Codice</th><th>Progressivo</th><th>Data</th><th>Dettaglio</th></tr>";
                  $(documenti).each(function (index) {
-                     htmlGen += "<tr><td><p>" + documenti[index].profilo + "</p></td><td><p>" + documenti[index].progressivo + "</p></td><td><p>" + documenti[index].data + "</p></td><td><input type=\"button\" value=\"dettagli\" onClick=\"showRigheDocumento(" + documenti[index].id + ")\"></td></tr>";
+                     htmlGen += "<tr><td><p>" + documenti[index].codiceProfilo + "</p></td><td><p>" + documenti[index].progressivo + "</p></td><td><p>" + documenti[index].data + "</p></td><td><input type=\"button\" value=\"dettagli\" onClick=\"showRigheDocumento(" + documenti[index].id + ")\"></td></tr>";
                  });
                  $("#documenti-content").show();
                  $("#main-documenti-page").show();
@@ -90,7 +90,7 @@ function showRigheDocumento(idDocumento) {
 		if (this.readyState == 4 && this.status == 200) {
 			console.log("Ho ricevuto la risposta");
 			var righe = JSON.parse(this.responseText);
-			var htmlGen = "<tr><th>Codice Articolo</th><th>Descrizione Articolo</th><th>Codice Lotto</th><th>Quantita</th><th>Dettagli</th></tr>";
+			var htmlGen = "<tr><th>Codice Articolo</th><th>Descrizione Articolo</th><th>Codice Lotto</th><th>Quantita</th></tr>";
 			for (var r of righe) {
 				htmlGen += "<tr><td>" + r.codiceArticolo + "</td><td>" + r.descrizioneArticolo + "</td><td>" + r.codiceLotto + "</td><td>" + r.quantita + "</td></tr>";
 			}
@@ -139,7 +139,7 @@ function inviaDocumento() {
 	var idProfilo = document.getElementById("profili-documento2").value;
 	var dataDoc = document.getElementById("dataDocIns").value
 	var xmlhttp = new XMLHttpRequest();
-	var documento = { idProfilo: idProfilo, data: dataDoc, righe: righeDocumento };
+	var documento = { idProfilo: idProfilo, data: dataDoc, righeDocumento: righeDocumento };
 	var documentoJSON = JSON.stringify(documento);
 	xmlhttp.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {

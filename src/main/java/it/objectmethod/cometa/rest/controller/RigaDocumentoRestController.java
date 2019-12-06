@@ -27,7 +27,7 @@ public class RigaDocumentoRestController {
 	@GetMapping("/{id}/list")
 	public List<RigaDocumentoDTO> mostraRighe(@PathVariable(value = "id") int idDocumento) {
 		List<RigaDocumentoDTO> righeDto = new ArrayList<RigaDocumentoDTO>();
-		List<RigaDocumento> righe = righeRepo.findAll();
+		List<RigaDocumento> righe = righeRepo.findByIdDocumentoselect(idDocumento);
 		for (RigaDocumento riga : righe) {
 			righeDto.add(rdMapper.toDto(riga));
 		}

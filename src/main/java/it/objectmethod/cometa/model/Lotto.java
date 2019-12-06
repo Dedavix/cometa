@@ -29,6 +29,7 @@ public class Lotto {
 	private int quantita;
     
 	@JsonIgnore
+	@JoinColumn(name = "id_articolo")
 	@ManyToOne
 	private Articolo articolo;
 	

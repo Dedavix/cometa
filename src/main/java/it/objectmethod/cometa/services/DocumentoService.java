@@ -38,13 +38,13 @@ public class DocumentoService {
 	@Autowired
 	DocumentoMapper docMapper;
 
-	@Transactional
+
 	public DocumentoDTO inserisciDocumento(DocumentoDTO docDto) {
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy");
 		String year = df.format(docDto.getData());
 
-		int progressivo = docRepo.getLastProgressivo(year, docDto.getIdProfilo()) + 1;
+		int progressivo = docRepo.getLastProgressivo(Integer.parseInt(year), docDto.getIdProfilo()) + 1;
 		docDto.setProgressivo(progressivo);
 		Documento doc = docMapper.toEntity(docDto);
 		doc = docRepo.save(doc);

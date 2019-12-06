@@ -14,6 +14,8 @@ public class RigaDocumentoDTO {
 	
 	private String codiceLotto;
 	
+	private String descrizioneArticolo;
+	
 	private Integer quantita;
 
 	public Integer getId() {
@@ -26,6 +28,10 @@ public class RigaDocumentoDTO {
 
 	public Integer getIdDocumento() {
 		return idDocumento;
+	}
+
+	public void setIdDocumento(Integer idDocumento) {
+		this.idDocumento = idDocumento;
 	}
 
 	public Integer getIdArticolo() {
@@ -44,10 +50,6 @@ public class RigaDocumentoDTO {
 		this.idLotto = idLotto;
 	}
 
-	public void setIdDocumento(Integer idDocumento) {
-		this.idDocumento = idDocumento;
-	}
-
 	public String getCodiceArticolo() {
 		return codiceArticolo;
 	}
@@ -62,6 +64,14 @@ public class RigaDocumentoDTO {
 
 	public void setCodiceLotto(String codiceLotto) {
 		this.codiceLotto = codiceLotto;
+	}
+
+	public String getDescrizioneArticolo() {
+		return descrizioneArticolo;
+	}
+
+	public void setDescrizioneArticolo(String descrizioneArticolo) {
+		this.descrizioneArticolo = descrizioneArticolo;
 	}
 
 	public Integer getQuantita() {

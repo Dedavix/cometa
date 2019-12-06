@@ -28,7 +28,9 @@ public class RigaDocumentoMapper implements EntityMapper<RigaDocumentoDTO, RigaD
 	@Override
 	public RigaDocumento toEntity(RigaDocumentoDTO dto) {
 		RigaDocumento entity = new RigaDocumento();
-		entity.setId(dto.getId());
+		if(dto.getId()!=null) {
+			entity.setId(dto.getId());
+		}
 		Articolo art = null;
 		if (dto.getIdArticolo() != null) {
 			Optional<Articolo> artOpt = artRepo.findById(dto.getIdArticolo());
@@ -64,6 +66,7 @@ public class RigaDocumentoMapper implements EntityMapper<RigaDocumentoDTO, RigaD
 		dto.setCodiceLotto(entity.getLotto().getCodice());
 		dto.setIdDocumento(entity.getDocumento().getId());
 		dto.setQuantita(entity.getQuantita());
+		dto.setDescrizioneArticolo(entity.getArticolo().getDescrizione());
 		return dto;
 	}
 

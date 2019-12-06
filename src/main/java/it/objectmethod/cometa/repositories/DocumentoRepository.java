@@ -14,7 +14,7 @@ import it.objectmethod.cometa.model.Documento;
 public interface DocumentoRepository extends JpaRepository<Documento, Integer> {
 	
 	@Query("select max(d.progressivo) from Documento d where year(d.data)=?1 and d.profilo.id = ?2")
-	public Integer getLastProgressivo(String anno, int idProfilo);
+	public Integer getLastProgressivo(int anno, int idProfilo);
 	
 	@Query(value ="select d.id from Documento d where d.progressivo = ?1 and d.profilo.id = ?2 and d.data = ?3")
 	public Integer getDocumentId(int progressivo, int idProfilo, Date data);
