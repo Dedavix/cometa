@@ -56,14 +56,15 @@ public class DocumentoRestController {
 	 * l'ok del validatore.
 	 */
 	@PostMapping("/save")
-	public DocumentoDTO inserisci(@RequestBody DocumentoDTO doc) throws Exception {
+	public DocumentoDTO inserisci(@RequestBody DocumentoDTO doc){
 		int idProfilo = doc.getIdProfilo();
 		ProfiloDocumento profile = profiliRepo.getOne(idProfilo);
 		String validationResult = validatoreDocumento.validate(doc, profile);
 		if (validationResult.equals(DocumentoValidator.OK)) {
 			doc = docService.inserisciDocumento(doc);
+			doc.setEsitoInsert("Ok");
 		} else {
-			throw new Exception(validationResult);
+			doc.setEsitoInsert(validationResult);
 		}
 		return doc;
 	}

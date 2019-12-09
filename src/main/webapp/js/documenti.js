@@ -145,12 +145,12 @@ function inviaDocumento() {
 		if (this.readyState == 4 && this.status == 200) {
 			console.log("Ho ricevuto la risposta");
 			var esito = this.responseText;
-			if (esito.localeCompare("OK") == 0) {
+			if (esito.esitoInsert.localeCompare("Ok") == 0) {
 				document.getElementById("aggiungi-documento").style.display = "none";
 				showDocumenti();
 				alert("DOCUMENTO INSERITO CORRETTAMENTE");
 			} else {
-				alert("INSERIMENTO NON VALIDO");
+				alert(esito.esitoInsert));
 			}
 		}
 	};

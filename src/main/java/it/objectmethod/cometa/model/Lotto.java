@@ -33,6 +33,7 @@ public class Lotto {
 	@ManyToOne
 	private Articolo articolo;
 	
+	@JsonIgnore
 	@JoinColumn(name ="id_lotto")
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<RigaDocumento> righeDocumento;

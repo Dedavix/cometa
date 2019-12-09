@@ -29,7 +29,7 @@ public class Documento {
 	private Integer progressivo;
 
 	@JoinColumn(name = "id_documento")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<RigaDocumento> righe;
 
 	@ManyToOne

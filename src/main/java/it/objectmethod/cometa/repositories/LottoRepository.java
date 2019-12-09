@@ -22,7 +22,7 @@ public interface LottoRepository extends JpaRepository<Lotto, Integer>{
 	
 	public Lotto findQuantitaById(int idLotto);
     
-	@Query("select l from Lotto l where l.articolo.id = ?2 and l.codice= ?1")
-	public Lotto findByCodiceAndIdArticolo(String codiceLotto, Integer idArticolo);
+	@Query("select l from Lotto l where l.codice= ?1 and l.articolo.id = ?2")
+	public Lotto getLottoByIdArticoloAndCodice(String codiceLotto, Integer idArticolo);
 
 }

@@ -13,7 +13,7 @@ import it.objectmethod.cometa.model.Documento;
 @Repository
 public interface DocumentoRepository extends JpaRepository<Documento, Integer> {
 	
-	@Query("select max(d.progressivo) from Documento d where year(d.data)=?1 and d.profilo.id = ?2")
+	@Query(value = "select coalesce(max(d.progressivo),0) from documenti d where year(d.data)=?1 and d.id_profilo_documento = ?2", nativeQuery = true)
 	public Integer getLastProgressivo(int anno, int idProfilo);
 	
 	@Query(value ="select d.id from Documento d where d.progressivo = ?1 and d.profilo.id = ?2 and d.data = ?3")

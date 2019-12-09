@@ -42,24 +42,29 @@ public class DocumentoService {
 	public DocumentoDTO inserisciDocumento(DocumentoDTO docDto) {
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy");
-		String year = df.format(docDto.getData());
-
-		int progressivo = docRepo.getLastProgressivo(Integer.parseInt(year), docDto.getIdProfilo()) + 1;
+		Integer year = Integer.parseInt(df.format(docDto.getData()));
+        int idProfilo = docDto.getIdProfilo();
+		int progressivo = docRepo.getLastProgressivo(year, idProfilo);
+		progressivo +=1;
 		docDto.setProgressivo(progressivo);
 		Documento doc = docMapper.toEntity(docDto);
+		List<RigaDocumento> righeDoc = doc.getRighe();
+		doc.setRighe(null);
 		doc = docRepo.save(doc);
-		for (RigaDocumento riga : doc.getRighe()) {
-
+		for (RigaDocumento riga : righeDoc) {
+            riga.setDocumento(doc);
 			// TODO utilizziamo ENUM per MovimentoMerce e costanti per i messaggi di errore
 			// (tranne quando identificano più casi di un tipo di errore)
 			Lotto lt = riga.getLotto();
 			if (("+").equals(doc.getProfilo().getMovimentoMerce())) {
-				lt.setQuantita(lt.getQuantita() + riga.getQuantita());
+					lt.setQuantita(lt.getQuantita() + riga.getQuantita());
 			}
 			if (("-").equals(doc.getProfilo().getMovimentoMerce())) {
 				lt.setQuantita(lt.getQuantita() - riga.getQuantita());
 			}
+			rdRepo.save(riga);
 		}
+		doc.setRighe(righeDoc);
 		docDto = docMapper.toDto(doc);
 		return docDto;
 	}

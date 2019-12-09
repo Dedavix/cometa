@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 public class DocumentoDTO {
+	
+    private String esitoInsert;
 
 	private Integer id;
 
@@ -63,6 +65,14 @@ public class DocumentoDTO {
 
 	public void setRigheDocumento(List<RigaDocumentoDTO> righeDocumento) {
 		this.righeDocumento = righeDocumento;
+	}
+
+	public String getEsitoInsert() {
+		return esitoInsert;
+	}
+
+	public void setEsitoInsert(String esitoInsert) {
+		this.esitoInsert = esitoInsert;
 	}
 
 }

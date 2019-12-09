@@ -32,7 +32,7 @@ public class DocumentoValidator {
 
 	private String validateDocumento(DocumentoDTO doc, ProfiloDocumento profilo) {
 		Lotto lotto = null;
-		int idArticolo;
+		int idArticolo = 0;
 		Articolo articolo = null;
 		boolean isValid = false;
 		String movimentoMerce = profilo.getMovimentoMerce();
@@ -41,9 +41,7 @@ public class DocumentoValidator {
 
 		for (RigaDocumentoDTO riga : righe) {
 			int indiceRiga = 1;
-			if (riga.getCodiceLotto()!="") {
-				lotto = lottiRepo.verificaLottoInArticolo(riga.getCodiceLotto(), riga.getCodiceArticolo());
-			}
+			lotto = lottiRepo.verificaLottoInArticolo(riga.getCodiceLotto(), riga.getCodiceArticolo());
 			articolo = articoliRepo.findByCodice(riga.getCodiceArticolo());
 
 			if (articolo != null) {
@@ -68,10 +66,14 @@ public class DocumentoValidator {
                     Lotto lottoInserito = lottiRepo.save(lottoDaInserire);
 					if (lottoInserito != null) {
 						isValid = true;
+						riga.setCodiceLotto(codiceLotto);
+						riga.setIdLotto(lottoInserito.getId());
 					}else {
 						statusMessage="ERRORE RIGA "+ indiceRiga +", MANCATO INSERIMENTO LOTTO";
 					}
-				} else {
+				} else if(lotto != null && "+".equals(movimentoMerce)){
+					isValid=true;}			
+				else {
 					statusMessage="ERRORE RIGA "+ indiceRiga +", LOTTO ASSENTE";
 				}
 			}else {

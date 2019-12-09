@@ -45,13 +45,14 @@ public class RigaDocumentoMapper implements EntityMapper<RigaDocumentoDTO, RigaD
 			Optional<Lotto> ltOpt = lottoRepo.findById(dto.getIdLotto());
 			lt = ltOpt.get();
 		} else {
-			lt = lottoRepo.findByCodiceAndIdArticolo(dto.getCodiceLotto(), dto.getIdArticolo());
+			lt = lottoRepo.getLottoByIdArticoloAndCodice(dto.getCodiceLotto(), art.getId());
 		}
 		entity.setLotto(lt);
 
 		if (dto.getIdDocumento() != null) {
 			entity.setDocumento(docRepo.findById(dto.getIdDocumento()).get());
 		}
+		
 		entity.setQuantita(dto.getQuantita());
 		return entity;
 	}
